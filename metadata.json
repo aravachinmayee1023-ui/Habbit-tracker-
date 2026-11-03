@@ -1,0 +1,6 @@
+{
+  "name": "Habit Tracker Pro",
+  "description": "A high-density dark-mode analytical habit tracker spreadsheet with 31-day operational matrix, chronobiological tracking, analytics hub, and Google Drive & Google Sheets integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
