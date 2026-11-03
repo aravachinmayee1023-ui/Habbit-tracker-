@@ -165,8 +165,9 @@ export const GoogleDriveModal: React.FC<GoogleDriveModalProps> = ({
                 To generate the Habit Tracker Pro spreadsheet in your Google Drive or use your existing sheet, please connect your Google account.
               </p>
               <button
+                type="button"
                 onClick={onSignIn}
-                className="flex items-center gap-2.5 px-4 py-2 bg-white hover:bg-zinc-100 text-zinc-800 font-medium text-xs rounded-lg transition shadow"
+                className="flex items-center gap-2.5 px-4 py-2 bg-white hover:bg-zinc-100 text-zinc-800 font-medium text-xs rounded-lg transition shadow cursor-pointer"
               >
                 <svg className="w-4 h-4" viewBox="0 0 48 48">
                   <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
@@ -176,6 +177,45 @@ export const GoogleDriveModal: React.FC<GoogleDriveModalProps> = ({
                 </svg>
                 <span>Sign in with Google</span>
               </button>
+
+              <div className="mt-4 pt-3 border-t border-zinc-800/80 w-full max-w-sm text-left">
+                <details className="text-[11px] text-zinc-400 group">
+                  <summary className="cursor-pointer hover:text-zinc-200 transition font-medium">
+                    Having trouble with browser popup? (Manual Token)
+                  </summary>
+                  <div className="mt-2 flex flex-col gap-2 p-2.5 rounded-lg bg-[#18181D] border border-zinc-800">
+                    <p className="text-[10px] text-zinc-400 leading-normal">
+                      If third-party cookies or browser popup blockers block authentication, paste an OAuth Bearer token with Sheets & Drive scopes below:
+                    </p>
+                    <div className="flex gap-1.5">
+                      <input
+                        type="password"
+                        placeholder="Paste ya29... token"
+                        id="manual-token-input"
+                        className="flex-1 bg-[#121214] border border-zinc-700 px-2 py-1 rounded text-xs text-white focus:outline-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          const input = document.getElementById('manual-token-input') as HTMLInputElement;
+                          if (input?.value) {
+                            try {
+                              const { setManualAccessToken } = await import('../services/firebaseAuth');
+                              await setManualAccessToken(input.value);
+                              setSuccessMessage('Access token applied successfully!');
+                            } catch (e: any) {
+                              setError(e.message || 'Failed to apply token');
+                            }
+                          }
+                        }}
+                        className="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-600 text-white rounded text-[11px] font-bold"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                </details>
+              </div>
             </div>
           ) : (
             <>

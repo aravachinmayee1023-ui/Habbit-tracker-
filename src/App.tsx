@@ -100,7 +100,7 @@ export default function App() {
       }
     } catch (err: any) {
       console.error('Sign-in failed:', err);
-      showToast('Google sign-in cancelled or failed');
+      showToast(err?.message || 'Google sign-in cancelled or failed');
     }
   };
 
